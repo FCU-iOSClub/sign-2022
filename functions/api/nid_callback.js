@@ -1,4 +1,4 @@
-export async function onRequestPost({ request }) {
+export async function onRequestPost({ env, request }) {
   try {
     const get_user_data_url =
       'https://opendata.fcu.edu.tw/fcuapi/api/GetUserInfo?client_id=638037929185.f4b4a8ed044a488c85074c7f9e5ada47.sign.iosclub.tw&user_code='

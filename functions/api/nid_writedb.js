@@ -1,4 +1,4 @@
-export async function onRequestPost({ request }) {
+export async function onRequestPost({ env, request }) {
   /*
     formData: {
       uid,
