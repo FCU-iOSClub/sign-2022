@@ -49,7 +49,7 @@ export async function onRequestPost({ env, request }) {
     const options = {
       method: 'POST',
       headers: {
-        Authorization: 'Bearer ' + reqBody.get(accessToken),
+        Authorization: 'Bearer ' + reqBody.get('accessToken'),
         'content-type': 'application/json',
       },
       body: JSON.stringify(document),
@@ -57,7 +57,7 @@ export async function onRequestPost({ env, request }) {
     // send post to firebase, create user nid
     await fetch(
       'https://firestore.googleapis.com/v1/projects/singin-8db60/databases/(default)/documents/user-nid?documentId=' +
-        reqBody.get(uid),
+        reqBody.get('uid'),
       options
     )
 
