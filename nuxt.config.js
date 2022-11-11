@@ -33,11 +33,12 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@unocss/nuxt'],
+  modules: ['@unocss/nuxt', '@nuxtjs/firebase'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
+  // uno css
   unocss: {
     // presets
     uno: true, // enabled `@unocss/preset-uno`
@@ -45,5 +46,30 @@ export default {
     // core options
     shortcuts: [],
     rules: [],
+  },
+
+  // firebase
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyBC7kva6e0kP7DfDB6qrT9_yGUXrrJzNNU',
+      authDomain: 'singin-8db60.firebaseapp.com',
+      projectId: 'singin-8db60',
+      storageBucket: 'singin-8db60.appspot.com',
+      messagingSenderId: '908520293073',
+      appId: '1:908520293073:web:9eba9ab1b21ce0ace07bf0',
+      measurementId: 'G-TMXWTR8KHB',
+    },
+    services: {
+      auth: true,
+      firestore: true,
+    },
+    auth: {
+      persistence: 'local', // default
+      initialize: {
+        onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
+        subscribeManually: false,
+      },
+      ssr: false, // default
+    },
   },
 }
