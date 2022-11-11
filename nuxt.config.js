@@ -1,3 +1,5 @@
+import presetUno from '@unocss/preset-uno'
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -36,12 +38,14 @@ export default {
   modules: ['@unocss/nuxt', '@nuxtjs/firebase'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extractCSS: true,
+  },
 
   // uno css
   unocss: {
     // presets
-    uno: true, // enabled `@unocss/preset-uno`
+    presets: [presetUno()],
 
     // core options
     shortcuts: [],
