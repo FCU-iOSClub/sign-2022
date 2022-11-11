@@ -24,6 +24,13 @@
     </nav>
 
     <h1 class="text-center">簽到系統</h1>
+    <a
+      v-if="loginStatus == 1"
+      class="w-fit py-3 px-6 rounded-full break-normal bg-blue-300 cursor-pointer text-black no-underline"
+      href="https://opendata.fcu.edu.tw/fcuOauth/Auth.aspx?client_id=638037929185.f4b4a8ed044a488c85074c7f9e5ada47.sign.iosclub.tw&client_url=https://sign.iosclub.tw/api/nid_callback"
+    >
+      Bind Nid
+    </a>
   </div>
 </template>
 

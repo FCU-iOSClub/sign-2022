@@ -8,8 +8,10 @@ export async function onRequestPost({ request }) {
   const reqBody = await request.formData()
 
   // get nid data from KV by session in cookie
-  const cookie = (0, import_cookie.parse)(request.headers.get("Cookie") || "");
-  const nid_data = await env.NID_SISSION.get(cookie["NID_SISSION"], { type: 'json' })
+  const cookie = (0, import_cookie.parse)(request.headers.get('Cookie') || '')
+  const nid_data = await env.NID_SISSION.get(cookie['NID_SISSION'], {
+    type: 'json',
+  })
   // convert nid_data to firebase document
   const document = {
     fields: {
