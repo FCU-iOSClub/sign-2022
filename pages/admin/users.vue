@@ -3,8 +3,8 @@
   <div>
     <nav class="relative w-screen bg-gray-100 shadow-lg h-fit">
       <div class="flex justify-between p-2 items-center">
-        <NuxtLink to="/" class="text-8 no-underline text-black font-bold"
-          >iOS Club</NuxtLink
+        <NuxtLink to="/admin" class="text-8 no-underline text-black font-bold"
+          >Admin</NuxtLink
         >
         <span
           v-if="loginStatus == 0"
@@ -24,21 +24,26 @@
     </nav>
 
     <main class="mx-2 md:mx-10 lg:mx-20">
-      <h1 class="text-left">Admin</h1>
+      <h1>人員</h1>
+      <h2 class="py-2">活動列表</h2>
       <p v-if="isAdmin == 0">請滾</p>
-      <div v-if="isAdmin == 1" class="flex flex-col gap-2">
-        <NuxtLink
-          class="w-fit text-black text-5 no-underline rounded-full bg-blue-300 px-3 py-2"
-          to="/admin/activities"
-        >
-          活動設定
-        </NuxtLink>
-        <NuxtLink
-          class="w-fit text-black text-5 no-underline rounded-full bg-blue-300 px-3 py-2"
-          to="/admin/users"
-        >
-          人員
-        </NuxtLink>
+      <div v-if="isAdmin == 1">
+        <table class="table-fixed border border-collapse border-black w-full">
+          <thead>
+            <tr>
+              <th class="w-1/6 border border-black">名字</th>
+              <th class="border border-black">學號</th>
+              <th class="border border-black">班級</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in users">
+              <td class="border border-black">{{ item.name }}</td>
+              <td class="border border-black">{{ item.id }}</td>
+              <td class="border border-black">{{ item.classname }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </main>
   </div>
@@ -51,6 +56,7 @@ export default {
       loginStatus: -1,
       uid: '',
       isAdmin: -1,
+      users: [],
     }
   },
   methods: {
@@ -79,6 +85,15 @@ export default {
           this.isAdmin = 0
         })
     },
+    async getUsers() {
+      this.$fire.firestore.collection('user-nid').onSnapshot((res) => {
+        this.users = res.docs.map((item) => ({
+          name: item.data().name,
+          classname: item.data().classname,
+          id: item.data().id,
+        }))
+      })
+    },
   },
   mounted() {
     this.$fire.auth.onAuthStateChanged((user) => {
@@ -86,6 +101,7 @@ export default {
         this.loginStatus = 1
         this.uid = user.uid
         this.getIsAdmin()
+        this.getUsers()
       } else {
         this.loginStatus = 0
       }

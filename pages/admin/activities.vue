@@ -3,8 +3,8 @@
   <div>
     <nav class="relative w-screen bg-gray-100 shadow-lg h-fit">
       <div class="flex justify-between p-2 items-center">
-        <NuxtLink to="/" class="text-8 no-underline text-black font-bold"
-          >iOS Club</NuxtLink
+        <NuxtLink to="/admin" class="text-8 no-underline text-black font-bold"
+          >Admin</NuxtLink
         >
         <span
           v-if="loginStatus == 0"
