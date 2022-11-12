@@ -67,7 +67,6 @@ export default {
         .doc(this.uid)
         .get()
         .then((doc) => {
-            console.log("hi")
           if (!doc.exists) {
             // nid not bind
             this.nid = 'NOT_BIND'
