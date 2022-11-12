@@ -34,14 +34,14 @@
       <!-- message -->
       <p v-if="loginStatus == 0">請先登入</p>
       <!-- if nid binded -->
-      <div v-if="nid !== 'NOT_INIT' && nid != 'NID_BIND'">
-        <p class="text-5" v-if="nid !== 'NOT_INIT' && nid != 'NOT_BIND'">
+      <div v-if="nid !== 'NOT_INIT' && nid !== 'NOT_BIND'">
+        <p class="text-5">
           Hi, {{ nidName }} ({{ nid }})
         </p>
         <p class="md:text-center">{{ now.toLocaleString() }}</p>
         <img
           v-bind:src="
-            'https://api.qrserver.com/v1/create-qr-code/?size=300&data=D0808129' +
+            'https://api.qrserver.com/v1/create-qr-code/?size=300&data=' +
             nid
           "
           class="w-full md:w-1/4"
