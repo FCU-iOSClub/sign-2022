@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'iosclub-singin',
+    title: 'iOS Club 打卡系統',
     htmlAttrs: {
       lang: 'en',
     },
