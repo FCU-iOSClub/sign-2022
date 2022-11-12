@@ -27,17 +27,13 @@
       <h1 class="text-left">Admin</h1>
       <p v-if="isAdmin == 0">請滾</p>
       <div v-if="isAdmin == 1" class="flex flex-col gap-2">
+        <!-- foreach admin functions -->
         <NuxtLink
+          v-for="item in adminFunctions"
+          :to="item.to"
           class="w-fit text-black text-5 no-underline rounded-full bg-blue-300 px-3 py-2"
-          to="/admin/activities"
         >
-          活動設定
-        </NuxtLink>
-        <NuxtLink
-          class="w-fit text-black text-5 no-underline rounded-full bg-blue-300 px-3 py-2"
-          to="/admin/users"
-        >
-          人員
+          {{ item.name }}
         </NuxtLink>
       </div>
     </main>
@@ -51,6 +47,11 @@ export default {
       loginStatus: -1,
       uid: '',
       isAdmin: -1,
+      adminFunctions: [
+        { name: '協助打卡', to: '/admin/sign-activity' },
+        { name: '活動設定', to: '/admin/activities' },
+        { name: '人員', to: '/admin/users' },
+      ],
     }
   },
   methods: {
