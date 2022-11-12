@@ -1,8 +1,8 @@
 <template>
   <div>
     <nav class="relative w-screen bg-gray-100 shadow-lg h-fit">
-      <div class="flex justify-between p-2">
-        <NuxtLink to="/" class="text-8 no-underline text-black"
+      <div class="flex justify-between p-2 items-center">
+        <NuxtLink to="/" class="text-8 no-underline text-black font-bold"
           >iOS Club</NuxtLink
         >
         <span
@@ -35,16 +35,13 @@
       <p v-if="loginStatus == 0">請先登入</p>
       <!-- if nid binded -->
       <div v-if="nid !== 'NOT_INIT' && nid !== 'NOT_BIND'">
-        <p class="text-5">
-          Hi, {{ nidName }} ({{ nid }})
-        </p>
+        <p class="text-5">Hi, {{ nidName }} ({{ nid }})</p>
         <p class="md:text-center">{{ now.toLocaleString() }}</p>
         <img
           v-bind:src="
-            'https://api.qrserver.com/v1/create-qr-code/?size=300&data=' +
-            nid
+            'https://api.qrserver.com/v1/create-qr-code/?size=300&data=' + uid
           "
-          class="w-full md:w-1/4"
+          class="w-full sm:w-1/4"
         />
       </div>
     </main>
