@@ -24,6 +24,7 @@
 
     <main class="mx-2 md:mx-10 lg:mx-20">
       <h1 class="text-left">簽到系統</h1>
+      <p class="">{{ now.toLocaleString() }}</p>
       <a
         v-if="loginStatus == 1 && nid === 'NOT_BIND'"
         class="shadow-md w-fit py-3 px-6 rounded-full break-normal bg-blue-300 cursor-pointer text-black no-underline"
@@ -49,6 +50,7 @@ export default {
       uid: '',
       nid: 'NOT_INIT',
       nidName: 'NOT_INIT',
+      now: new Date(),
     }
   },
   methods: {
@@ -82,6 +84,9 @@ export default {
     },
   },
   mounted() {
+    setInterval(() => {
+      this.now = new Date()
+    }, 1000)
     this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.loginStatus = 1
