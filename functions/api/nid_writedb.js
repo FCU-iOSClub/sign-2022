@@ -41,7 +41,7 @@ export async function onRequestPost({ env, request }) {
       dept_name: {
         stringValue: nid_data.dept_name,
       },
-      Email: {
+      email: {
         stringValue: nid_data.Email,
       },
     },
