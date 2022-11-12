@@ -36,7 +36,7 @@
       <!-- if nid binded -->
       <div v-if="nid !== 'NOT_INIT' && nid !== 'NOT_BIND'">
         <p class="text-5">Hi, {{ nidName }} ({{ nid }})</p>
-        <p class="md:text-center">{{ now.toLocaleString() }}</p>
+        <p class="sm:text-center">{{ now.toLocaleString() }}</p>
         <img
           v-bind:src="
             'https://api.qrserver.com/v1/create-qr-code/?size=300&data=' + uid
