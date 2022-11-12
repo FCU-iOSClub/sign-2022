@@ -24,7 +24,6 @@
 
     <main class="mx-2 md:mx-10 lg:mx-20">
       <h1 class="text-left">簽到系統</h1>
-      <p class="">{{ now.toLocaleString() }}</p>
       <a
         v-if="loginStatus == 1 && nid === 'NOT_BIND'"
         class="shadow-md w-fit py-3 px-6 rounded-full break-normal bg-blue-300 cursor-pointer text-black no-underline"
@@ -34,9 +33,20 @@
       </a>
       <!-- message -->
       <p v-if="loginStatus == 0">請先登入</p>
-      <p class="text-5" v-if="nid !== 'NOT_INIT' && nid != 'NOT_BIND'">
-        Hi, {{ nidName }} ({{ nid }})
-      </p>
+      <!-- if nid binded -->
+      <div v-if="nid !== 'NOT_INIT' && nid != 'NID_BIND'">
+        <p class="text-5" v-if="nid !== 'NOT_INIT' && nid != 'NOT_BIND'">
+          Hi, {{ nidName }} ({{ nid }})
+        </p>
+        <p class="md:text-center">{{ now.toLocaleString() }}</p>
+        <img
+          v-bind:src="
+            'https://api.qrserver.com/v1/create-qr-code/?size=300&data=D0808129' +
+            nid
+          "
+          class="w-full md:w-1/4"
+        />
+      </div>
     </main>
   </div>
 </template>
