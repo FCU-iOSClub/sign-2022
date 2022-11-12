@@ -26,7 +26,7 @@
     <main class="mx-2 md:mx-10 lg:mx-20">
       <h1 class="text-left">簽到系統</h1>
       <a
-        v-if="loginStatus == 1"
+        v-if="loginStatus == 1 && nid === 'NOT_BIND'"
         class="shadow-md w-fit py-3 px-6 rounded-full break-normal bg-blue-300 cursor-pointer text-black no-underline"
         href="https://opendata.fcu.edu.tw/fcuOauth/Auth.aspx?client_id=638037929185.f4b4a8ed044a488c85074c7f9e5ada47.sign.iosclub.tw&client_url=https://sign.iosclub.tw/api/nid_callback"
       >
@@ -34,6 +34,7 @@
       </a>
       <!-- message -->
       <p v-if="loginStatus == 0">請先登入</p>
+      <p v-if="nid !== 'NOT_INIT' && nid != 'NOT_BIND'">{{ nid }}</p>
     </main>
   </div>
 </template>
@@ -44,6 +45,9 @@ export default {
     return {
       loginStatus: -1,
       userEmail: '',
+      uid: '',
+      nid: 'NOT_INIT',
+      nidName: 'NOT_INIT',
     }
   },
   methods: {
@@ -53,13 +57,37 @@ export default {
     },
     async logout() {
       this.$fire.auth.signOut()
+      // clen value
+      this.nid = 'NOT_INIT'
+      this.nidName = 'NOT_INIT'
+    },
+    async getUserNidData() {
+      this.$fire.firestore
+        .collection('user-nid')
+        .doc(this.uid)
+        .get()
+        .then((doc) => {
+            console.log("hi")
+          if (!doc.exists) {
+            // nid not bind
+            this.nid = 'NOT_BIND'
+            this.nidName = 'NOT_BIND'
+            return
+          }
+          // nid binded
+          const data = doc.data()
+          this.nid = data.id
+          this.nidName = data.name
+        })
     },
   },
   mounted() {
     this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.loginStatus = 1
+        this.uid = user.uid
         this.userEmail = user.email
+        this.getUserNidData()
       } else {
         this.loginStatus = 0
       }
