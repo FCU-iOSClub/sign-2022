@@ -1,3 +1,4 @@
+<!-- Please remove this file from your project -->
 <template>
   <div>
     <nav class="relative w-screen bg-gray-100 shadow-lg h-fit">
@@ -23,19 +24,16 @@
     </nav>
 
     <main class="mx-2 md:mx-10 lg:mx-20">
-      <h1 class="text-left">簽到系統</h1>
-      <a
-        v-if="loginStatus == 1 && nid === 'NOT_BIND'"
-        class="shadow-md w-fit py-3 px-6 rounded-full break-normal bg-blue-300 cursor-pointer text-black no-underline"
-        href="https://opendata.fcu.edu.tw/fcuOauth/Auth.aspx?client_id=638037929185.f4b4a8ed044a488c85074c7f9e5ada47.sign.iosclub.tw&client_url=https://sign.iosclub.tw/api/nid_callback"
-      >
-        Bind Nid
-      </a>
-      <!-- message -->
-      <p v-if="loginStatus == 0">請先登入</p>
-      <p class="text-5" v-if="nid !== 'NOT_INIT' && nid != 'NOT_BIND'">
-        Hi, {{ nidName }} ({{ nid }})
-      </p>
+      <h1 class="text-left">Admin</h1>
+      <p v-if="isAdmin == 0">請滾</p>
+      <div v-if="isAdmin == 1">
+        <NuxtLink
+          class="text-black text-5 no-underline rounded-full bg-blue-300 px-3 py-2"
+          to="/admin/activities"
+        >
+          活動設定
+        </NuxtLink>
+      </div>
     </main>
   </div>
 </template>
@@ -45,10 +43,8 @@ export default {
   data() {
     return {
       loginStatus: -1,
-      userEmail: '',
       uid: '',
-      nid: 'NOT_INIT',
-      nidName: 'NOT_INIT',
+      isAdmin: -1,
     }
   },
   methods: {
@@ -58,26 +54,23 @@ export default {
     },
     async logout() {
       this.$fire.auth.signOut()
-      // clen value
       this.nid = 'NOT_INIT'
       this.nidName = 'NOT_INIT'
     },
-    async getUserNidData() {
+    async getIsAdmin() {
       this.$fire.firestore
-        .collection('user-nid')
+        .collection('admins')
         .doc(this.uid)
         .get()
         .then((doc) => {
           if (!doc.exists) {
-            // nid not bind
-            this.nid = 'NOT_BIND'
-            this.nidName = 'NOT_BIND'
+            this.isAdmin = 0
             return
           }
-          // nid binded
-          const data = doc.data()
-          this.nid = data.id
-          this.nidName = data.name
+          this.isAdmin = doc.data().admin ? 1 : 0
+        })
+        .catch((e) => {
+          this.isAdmin = 0
         })
     },
   },
@@ -86,8 +79,7 @@ export default {
       if (user) {
         this.loginStatus = 1
         this.uid = user.uid
-        this.userEmail = user.email
-        this.getUserNidData()
+        this.getIsAdmin()
       } else {
         this.loginStatus = 0
       }
