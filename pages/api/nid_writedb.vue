@@ -1,5 +1,5 @@
 <template>
-  <form ref="form" action="/api/nid_writedb" method="post">
+  <form class="invisible" ref="form" action="/api/nid_writedb" method="post">
     <input ref="accessToken" type="text" name="accessToken" />
     <input ref="uid" type="text" name="uid" />
     <input ref="submit" type="submit" value="Submit" />

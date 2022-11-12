@@ -34,7 +34,9 @@
       </a>
       <!-- message -->
       <p v-if="loginStatus == 0">請先登入</p>
-      <p v-if="nid !== 'NOT_INIT' && nid != 'NOT_BIND'">{{ nid }}</p>
+      <p class="text-5" v-if="nid !== 'NOT_INIT' && nid != 'NOT_BIND'">
+        Hi, {{ nidName }} ({{ nid }})
+      </p>
     </main>
   </div>
 </template>
