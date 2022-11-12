@@ -24,15 +24,52 @@
     </nav>
 
     <main class="mx-2 md:mx-10 lg:mx-20">
-      <h1 class="text-left">Admin</h1>
+      <h1>活動設定 Admin</h1>
+      <h2 class="py-2">活動列表</h2>
       <p v-if="isAdmin == 0">請滾</p>
       <div v-if="isAdmin == 1">
-        <div class="flex flex-col">
-          <div v-for="item in activities" class="flex flex-row">
-            <p>{{ item.name }}</p>
-            <p>{{ item.startTime.toDate() }}</p>
+        <table class="table-fixed border border-collapse border-black w-full">
+          <thead>
+            <tr>
+              <th class="w-1/6 border border-black">活動名稱</th>
+              <th class="border border-black">開始</th>
+              <th class="border border-black">結束</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in activities">
+              <td class="border border-black">{{ item.name }}</td>
+              <td class="border border-black">
+                {{ item.startTime.toDate().toLocaleString('zh-tw') }}
+              </td>
+              <td class="border border-black">
+                {{ item.endTime.toDate().toLocaleString('zh-tw') }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <h2 class="py-2">新增活動</h2>
+        <form class="flex flex-col gap-2">
+          <div class="flex gap-2">
+            <label>活動名稱</label>
+            <input type="text" v-model="inputActName" placeholder="活動名稱" />
           </div>
-        </div>
+          <div class="flex gap-2">
+            <label>開始時間</label>
+            <input type="datetime-local" v-model="inputActStartTime" />
+          </div>
+          <div class="flex gap-2">
+            <label>結束時間</label>
+            <input type="datetime-local" v-model="inputActEndTime" />
+          </div>
+          <button
+            @click="submitNewActivite"
+            type="button"
+            class="py-2 px-4 rounded-md bg-blue border-0 w-fit"
+          >
+            新增
+          </button>
+        </form>
       </div>
     </main>
   </div>
@@ -46,6 +83,9 @@ export default {
       uid: '',
       isAdmin: -1,
       activities: {},
+      inputActName: '',
+      inputActStartTime: '',
+      inputActEndTime: '',
     }
   },
   methods: {
@@ -75,13 +115,28 @@ export default {
         })
     },
     async getActivities() {
-      const res = await this.$fire.firestore.collection('activities').get()
-      this.activities = res.docs.map((item) => ({
-        name: item.data().name,
-        startTime: item.data().startTime,
-        entTime: item.data().endTime,
-      }))
-      console.log(this.activities)
+      this.$fire.firestore.collection('activities').onSnapshot((res) => {
+        this.activities = res.docs.map((item) => ({
+          name: item.data().name,
+          startTime: item.data().startTime,
+          endTime: item.data().endTime,
+        }))
+      })
+    },
+    async submitNewActivite() {
+      this.$fire.firestore
+        .collection('activities')
+        .add({
+          name: this.inputActName,
+          startTime: this.$fireModule.firestore.Timestamp.fromDate(
+            new Date(this.inputActStartTime)
+          ),
+          endTime: this.$fireModule.firestore.Timestamp.fromDate(
+            new Date(this.inputActEndTime)
+          ),
+        })
+        .then((d) => console.log(d))
+        .catch((e) => console.log(e))
     },
   },
   mounted() {
