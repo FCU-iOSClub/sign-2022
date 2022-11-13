@@ -35,8 +35,9 @@
               {{ item.name }}
             </option>
           </select>
+          <p>已打卡人數：{{ activitiesSignLog.length }}</p>
           <p>
-            ActivityID: {{ inputActivityId === '' ? 'EMPTY' : inputActivityId }}
+            ActivityID：{{ inputActivityId === '' ? 'EMPTY' : inputActivityId }}
           </p>
         </div>
         <!-- input -->
