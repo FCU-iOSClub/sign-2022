@@ -39,19 +39,34 @@
             ActivityID: {{ inputActivityId === '' ? 'EMPTY' : inputActivityId }}
           </p>
         </div>
-        <!-- qrcode scanner -->
-        <input type="text" v-model="inputUID" />
-        <button @click="signUserToActivity">Sign</button>
-        <p v-for="item in activitiesSignLog">{{ item.uid }}</p>
+        <!-- input -->
+        <div class="flex gap-2">
+          <input type="text" v-model="inputUID" />
+          <p>{{ inputUIDName }}</p>
+          <button @click="signUserToActivity">送出</button>
+        </div>
+        <!-- qr code scanner -->
+        <div class="w-full sm:w-1/4">
+          <qrcode-stream @decode="onDecodeQR" @init="onInitQR" />
+        </div>
+        <!-- signed list -->
+        <div class="flex gap-4" v-for="item in activitiesSignLog">
+          <p>{{ item.time.toLocaleString() }}</p>
+          <p>{{ item.name }}</p>
+        </div>
       </div>
     </main>
   </div>
 </template>
 
 <script>
-import { kMaxLength } from 'buffer'
-
 export default {
+  components: {
+    'qrcode-stream': async () => {
+      const { QrcodeStream } = await import('vue-qrcode-reader')
+      return QrcodeStream
+    },
+  },
   data() {
     return {
       loginStatus: -1,
@@ -60,6 +75,7 @@ export default {
       activities: [],
       inputActivityId: '',
       inputUID: '',
+      inputUIDName: '',
       activitiesSignLog: [],
       activitiesSignLogUnsubscribe: {},
     }
@@ -117,6 +133,25 @@ export default {
           },
           { merge: true }
         )
+      this.inputUID = ''
+    },
+    async getUserNameByUID(uid) {
+      const user = await this.$fire.firestore
+        .collection('user-nid')
+        .doc(uid)
+        .get()
+      return user.data().name
+    },
+    async getUserNamesByUIDs(uids) {
+      const users = await this.$fire.firestore
+        .collection('user-nid')
+        .where(this.$fireModule.firestore.FieldPath.documentId(), 'in', uids)
+        .get()
+      var result = {}
+      users.forEach((user) => {
+        result[user.id] = user.data().name
+      })
+      return result
     },
     async getActivitiesSignLog() {
       try {
@@ -126,14 +161,35 @@ export default {
       this.activitiesSignLogUnsubscribe = this.$fire.firestore
         .collection('activities-sign')
         .doc(this.inputActivityId)
-        .onSnapshot((doc) => {
+        .onSnapshot(async (doc) => {
           if (doc.exists) {
             const data = doc.data()
-            this.activitiesSignLog = Object.keys(data).map((key) => ({
-              uid: key,
-            }))
+            const userNames = await this.getUserNamesByUIDs(Object.keys(data))
+            const logs = Object.keys(data)
+              .map((key) => ({
+                uid: key,
+                time: new Date(data[key].seconds * 1000),
+                name: userNames[key],
+              }))
+              .sort((a, b) => b.time - a.time)
+            this.activitiesSignLog = logs
           }
         })
+    },
+    async onInitQR(promiss) {
+      try {
+        await promiss
+        console.log('QRcode reader ready')
+      } catch (e) {
+        console.log(e.stack)
+      }
+    },
+    onDecodeQR(result) {
+      console.log('QRcode reader decode: ' + result)
+      this.inputUID = result
+      this.getUserNameByUID(result).then((name) => {
+        this.inputUIDName = name
+      })
     },
   },
   watch: {
