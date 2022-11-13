@@ -135,6 +135,7 @@ export default {
           { merge: true }
         )
       this.inputUID = ''
+      this.inputUIDName = ''
     },
     async getUserNameByUID(uid) {
       const user = await this.$fire.firestore
