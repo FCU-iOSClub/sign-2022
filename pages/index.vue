@@ -23,7 +23,7 @@
     </nav>
 
     <main class="mx-2 md:mx-10 lg:mx-20">
-      <h1 class="text-left">打卡系統</h1>
+      <h1 @click="goAdmin" class="text-left">打卡系統</h1>
       <!-- loading circle -->
       <div
         v-if="loginStatus == -1"
@@ -63,6 +63,7 @@ export default {
       nid: 'NOT_INIT',
       nidName: 'NOT_INIT',
       now: new Date(),
+      goAdminCount: 0,
     }
   },
   methods: {
@@ -93,6 +94,12 @@ export default {
           this.nid = data.id
           this.nidName = data.name
         })
+    },
+    goAdmin() {
+      this.goAdminCount++
+      if (this.goAdminCount >= 5) {
+        window.location = '/admin'
+      }
     },
   },
   mounted() {
