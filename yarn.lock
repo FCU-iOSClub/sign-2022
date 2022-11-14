@@ -1441,7 +1441,14 @@
     protobufjs "^7.0.0"
     yargs "^16.2.0"
 
-"@iconify/types@^2.0.0":
+"@iconify-json/line-md@^1.1.18":
+  version "1.1.18"
+  resolved "https://registry.yarnpkg.com/@iconify-json/line-md/-/line-md-1.1.18.tgz#bd19df47d3ceaa3b64d49f394d6e8855895e0d54"
+  integrity sha512-AU12ZpnpDdks66cHG1bBhRMVH0c4mJ8sx0C6c8sQ3D29LQz/TvHklWBngaGMZ56PSmASyGVQ4xC5Tnnl33MZfw==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify/types@*", "@iconify/types@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@iconify/types/-/types-2.0.0.tgz#ab0e9ea681d6c8a1214f30cd741fe3a20cc57f57"
   integrity sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==
@@ -2416,6 +2423,11 @@
   resolved "https://registry.yarnpkg.com/@unocss/core/-/core-0.46.4.tgz#3fa4c57551673266aecd47b4c1fc088ca716b48b"
   integrity sha512-pLWJ/QgRW1DT1m0Y/7IyX7tURi/1fJ0T17jygH+iMGfwOJVFigkqxstTbWknuVFqc1rCH+pO20bI5k0r3xvIPA==
 
+"@unocss/core@0.46.5":
+  version "0.46.5"
+  resolved "https://registry.yarnpkg.com/@unocss/core/-/core-0.46.5.tgz#24bff282739797ec6b2670776ac3096560445e31"
+  integrity sha512-apPWISH2ASKySyp4vBAkEzr5XNJDv4mu26eQ4wvg2a32cHRokUsiHLWFNMDe7oJquivTAOHsXqbLQuR9ePKNSg==
+
 "@unocss/inspector@0.46.4":
   version "0.46.4"
   resolved "https://registry.yarnpkg.com/@unocss/inspector/-/inspector-0.46.4.tgz#868d5dd5cb3b39c4b5537ef1994b46cc2b803390"
@@ -2457,6 +2469,15 @@
   dependencies:
     "@iconify/utils" "^2.0.1"
     "@unocss/core" "0.46.4"
+    ohmyfetch "^0.4.20"
+
+"@unocss/preset-icons@^0.46.5":
+  version "0.46.5"
+  resolved "https://registry.yarnpkg.com/@unocss/preset-icons/-/preset-icons-0.46.5.tgz#415002151fe9456de521b4ed47fac3600624e30d"
+  integrity sha512-g1gMi++j233nc/5KcUti5+X+fQ9K36MzROx37pJCFz+jD5i7Y21hXOC/brP7k4tWo1IEFR8rsLgtvVEXOhu8Sw==
+  dependencies:
+    "@iconify/utils" "^2.0.1"
+    "@unocss/core" "0.46.5"
     ohmyfetch "^0.4.20"
 
 "@unocss/preset-mini@0.46.4":

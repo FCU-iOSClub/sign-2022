@@ -45,7 +45,8 @@ export default {
   // uno css
   unocss: {
     // presets
-    presets: [presetUno()],
+    uno: true,
+    icons: true,
 
     // core options
     shortcuts: [],
