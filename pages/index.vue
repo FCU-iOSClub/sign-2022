@@ -24,7 +24,11 @@
 
     <main class="mx-2 md:mx-10 lg:mx-20">
       <h1 class="text-left">簽到系統</h1>
-      <div v-if="loginStatus == -1" class="i-line-md-loading-twotone-loop" />
+      <!-- loading circle -->
+      <div
+        v-if="loginStatus == -1"
+        class="scale-400 origin-left i-line-md-loading-twotone-loop"
+      />
       <a
         v-if="loginStatus == 1 && nid === 'NOT_BIND'"
         class="shadow-md w-fit py-3 px-6 rounded-full break-normal bg-blue-300 cursor-pointer text-black no-underline"
