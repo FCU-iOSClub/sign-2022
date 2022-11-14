@@ -23,7 +23,7 @@
     </nav>
 
     <main class="mx-2 md:mx-10 lg:mx-20">
-      <h1 class="text-left">簽到系統</h1>
+      <h1 class="text-left">打卡系統</h1>
       <!-- loading circle -->
       <div
         v-if="loginStatus == -1"
