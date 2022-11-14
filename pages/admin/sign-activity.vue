@@ -196,7 +196,7 @@ export default {
   },
   watch: {
     inputActivityId: {
-      handler(_, newValue) {
+      handler(newValue, _) {
         if (newValue !== '') {
           this.getActivitiesSignLog()
         }

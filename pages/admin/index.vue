@@ -49,7 +49,8 @@ export default {
       isAdmin: -1,
       adminFunctions: [
         { name: '協助打卡', to: '/admin/sign-activity' },
-        { name: '活動設定', to: '/admin/activities' },
+        { name: '新增活動', to: '/admin/activities' },
+        { name: '活動出席', to: '/admin/activities_attendance' },
         { name: '人員', to: '/admin/users' },
       ],
     }
