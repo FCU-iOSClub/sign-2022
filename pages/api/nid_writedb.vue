@@ -1,9 +1,12 @@
 <template>
-  <form class="invisible" ref="form" action="/api/nid_writedb" method="post">
-    <input ref="accessToken" type="text" name="accessToken" />
-    <input ref="uid" type="text" name="uid" />
-    <input ref="submit" type="submit" value="Submit" />
-  </form>
+  <div>
+    <div class="scale-400 origin-top-left i-line-md-loading-twotone-loop" />
+    <form class="invisible" ref="form" action="/api/nid_writedb" method="post">
+      <input ref="accessToken" type="text" name="accessToken" />
+      <input ref="uid" type="text" name="uid" />
+      <input ref="submit" type="submit" value="Submit" />
+    </form>
+  </div>
 </template>
 
 <script>
