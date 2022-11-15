@@ -69,7 +69,7 @@ export default {
   methods: {
     async login() {
       const provider = new this.$fireModule.auth.GoogleAuthProvider()
-      this.$fire.auth.signInWithRedirect(provider)
+      this.$fire.auth.signInWithPopup(provider)
     },
     async logout() {
       this.$fire.auth.signOut()
