@@ -63,6 +63,7 @@
               </tr>
             </tbody>
           </table>
+          <div class="h-8" />
         </div>
       </div>
     </main>
@@ -130,21 +131,26 @@ export default {
         .onSnapshot(async (doc) => {
           const data = doc.data()
           const uids = Object.keys(data)
-          const users = (
-            await this.$fire.firestore
-              .collection('user-nid')
-              .where(
-                this.$fireModule.firestore.FieldPath.documentId(),
-                'in',
-                uids
-              )
-              .get()
-          ).docs.map((item) => ({
-            uid: item.id,
-            name: item.data().name,
-            nid: item.data().id,
-            classname: item.data().classname,
-          }))
+          const users = []
+          for (var userI = 0; userI < uids.length; userI += 10) {
+            const uids_tmp = uids.slice(userI, userI + 10)
+            const us = (
+              await this.$fire.firestore
+                .collection('user-nid')
+                .where(
+                  this.$fireModule.firestore.FieldPath.documentId(),
+                  'in',
+                  uids_tmp
+                )
+                .get()
+            ).docs.map((item) => ({
+              uid: item.id,
+              name: item.data().name,
+              nid: item.data().id,
+              classname: item.data().classname,
+            }))
+            users.push(...us)
+          }
           const att = uids.map((uid) => {
             const user = users.filter((u) => u.uid === uid)[0]
             return {
