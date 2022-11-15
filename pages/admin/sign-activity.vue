@@ -145,10 +145,19 @@ export default {
       return user.data().name
     },
     async getUserNamesByUIDs(uids) {
-      const users = await this.$fire.firestore
-        .collection('user-nid')
-        .where(this.$fireModule.firestore.FieldPath.documentId(), 'in', uids)
-        .get()
+      const users = []
+      console.log('1')
+      for (var uidI = 0; uidI < uids.length; uidI += 10) {
+        const s = await this.$fire.firestore
+          .collection('user-nid')
+          .where(
+            this.$fireModule.firestore.FieldPath.documentId(),
+            'in',
+            uids.slice(uidI, uidI + 10)
+          )
+          .get()
+        users.push(...s.docs)
+      }
       var result = {}
       users.forEach((user) => {
         result[user.id] = user.data().name
