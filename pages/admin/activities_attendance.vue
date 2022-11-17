@@ -116,7 +116,7 @@ export default {
           name: item.data().name,
           startTime: item.data().startTime,
           endTime: item.data().endTime,
-        }))
+        })))
       })
     },
     async getAttendance(actID) {
